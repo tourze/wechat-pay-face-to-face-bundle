@@ -30,7 +30,7 @@ final class FaceToFaceOrderRepositoryTest extends AbstractRepositoryTestCase
     {
         // 清理可能的测试数据，确保测试隔离
         $repository = $this->getRepository();
-        $entityManager = $this->getEntityManagerInstance();
+        $entityManager = self::getEntityManager();
 
         // 清理所有现有实体
         $entities = $repository->findAll();

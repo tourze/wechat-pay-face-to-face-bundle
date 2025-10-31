@@ -1,0 +1,1 @@
+Project config file at path /home/admin/work/source/php-monorepo/packages/wechat-pay-face-to-face-bundle/phpstan.neon does not exist.

@@ -1,0 +1,4 @@
+wechat_pay_face_to_face_api:
+  resource: '@WechatPayFaceToFaceBundle/Controller/'
+  type: attribute
+  prefix: /api

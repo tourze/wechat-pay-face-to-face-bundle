@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    WechatPayFaceToFaceBundle\DataFixtures\:
+        resource: '../../DataFixtures'
+        tags:
+            - 'doctrine.fixture.orm'
+
+    WechatPayFaceToFaceBundle\Tests\Fixtures\:
+        resource: '../../../tests/Fixtures/*'
+        tags: ['doctrine.fixture.orm']
+        public: true

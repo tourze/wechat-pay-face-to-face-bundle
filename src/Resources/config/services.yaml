@@ -1,0 +1,37 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  WechatPayFaceToFaceBundle\Controller\:
+    resource: '../../Controller/'
+    tags: ['controller.service_arguments']
+
+  WechatPayFaceToFaceBundle\Service\:
+    resource: '../../Service/'
+
+  WechatPayFaceToFaceBundle\Repository\:
+    resource: '../../Repository/'
+    public: true
+
+  WechatPayFaceToFaceBundle\Command\:
+    resource: '../../Command/'
+
+  WechatPayFaceToFaceBundle\Validator\:
+    resource: '../../Validator/'
+
+  # Guzzle HTTP Client
+  GuzzleHttp\Client:
+    factory: ['GuzzleHttp\Client', 'createFromConfig']
+    arguments:
+      - timeout: 30
+        headers:
+          Content-Type: application/json
+          Accept: application/json
+
+  # 面对面收款服务特殊配置
+  WechatPayFaceToFaceBundle\Service\FaceToFacePayService:
+    arguments:
+      $appId: '%env(default:wx-test-appid:WECHAT_PAY_FACE_TO_FACE_APP_ID)%'
+      $mchId: '%env(default:test-mchid:WECHAT_PAY_FACE_TO_FACE_MCH_ID)%'
+      $apiKey: '%env(default:test-api-key:WECHAT_PAY_FACE_TO_FACE_API_KEY)%'

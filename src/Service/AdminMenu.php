@@ -44,8 +44,15 @@ readonly class AdminMenu implements MenuProviderInterface
             return;
         }
 
-        $faceToFaceMenu->addChild('收款订单')
-            ->setUri($this->linkGenerator->getCurdListPage(FaceToFaceOrder::class))
-            ->setAttribute('icon', 'fas fa-receipt');
+        // 尝试生成CRUD链接，如果失败则跳过（例如没有Dashboard时）
+        try {
+            $uri = $this->linkGenerator->getCurdListPage(FaceToFaceOrder::class);
+            $faceToFaceMenu->addChild('收款订单')
+                ->setUri($uri)
+                ->setAttribute('icon', 'fas fa-receipt');
+        } catch (\Throwable $e) {
+            // 如果无法生成链接（例如没有Dashboard），则跳过添加菜单项
+            // 这样业务Bundle就不会因为Dashboard的问题而报错
+        }
     }
 }

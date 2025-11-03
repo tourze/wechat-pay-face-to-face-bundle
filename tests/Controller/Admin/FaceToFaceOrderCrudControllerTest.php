@@ -8,7 +8,6 @@ use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Tourze\PHPUnitSymfonyWebTest\AbstractEasyAdminControllerTestCase;
-use WechatPayFaceToFaceBundle\Controller\Admin\DashboardController;
 use WechatPayFaceToFaceBundle\Controller\Admin\FaceToFaceOrderCrudController;
 use WechatPayFaceToFaceBundle\Entity\FaceToFaceOrder;
 
@@ -33,17 +32,13 @@ final class FaceToFaceOrderCrudControllerTest extends AbstractEasyAdminControlle
         return self::getService(FaceToFaceOrderCrudController::class);
     }
 
-    protected function getDashboardFqcn(): string
+    protected function getPreferredDashboardControllerFqcn(): ?string
     {
-        return DashboardController::class;
+        // 由于我们删除了业务Bundle中的DashboardController，让测试使用默认的测试框架Dashboard
+        return null;
     }
 
-    protected function onSetUp(): void
-    {
-        $client = self::createClientWithDatabase();
-        self::getClient($client);
-    }
-
+  
     /**
      * @return iterable<string, array{string}>
      */

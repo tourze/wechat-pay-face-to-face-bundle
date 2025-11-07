@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WechatPayFaceToFaceBundle\Controller;
 
-use BizUserBundle\Entity\BizUser;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -130,8 +130,18 @@ final class FaceToFacePayController extends AbstractController
                 return $user;
             }
 
+            // 获取用户ID，确保类型安全
+            $userId = null;
+            if (method_exists($user, 'getId')) {
+                $userId = $user->getId();
+            }
+
+            if ($userId === null) {
+                return $this->buildErrorResponse('用户ID无效', 400);
+            }
+
             $orders = $this->orderRepository->findByUserId(
-                $user->getId(),
+                $userId,
                 $paginationParams['limit'],
                 $paginationParams['offset']
             );
@@ -199,8 +209,11 @@ final class FaceToFacePayController extends AbstractController
     private function attachUserToOrder(FaceToFaceOrder $order): void
     {
         $user = $this->getUser();
-        if ($user instanceof BizUser) {
-            $order->setUserId($user->getId());
+        if ($user instanceof UserInterface && method_exists($user, 'getId')) {
+            $userId = $user->getId();
+            if ($userId !== null) {
+                $order->setUserId($userId);
+            }
         }
     }
 
@@ -310,19 +323,23 @@ final class FaceToFacePayController extends AbstractController
     /**
      * 获取当前登录用户
      *
-     * @return BizUser|JsonResponse
+     * @return UserInterface|JsonResponse
      */
-    private function getCurrentUser(): BizUser|JsonResponse
+    private function getCurrentUser(): UserInterface|JsonResponse
     {
         $user = $this->getUser();
         if ($user === null) {
             return $this->buildErrorResponse('用户未登录', 401);
         }
 
-        assert($user instanceof BizUser);
-        $userId = $user->getId();
-        if ($userId === null) {
-            return $this->buildErrorResponse('用户ID无效', 400);
+        assert($user instanceof UserInterface);
+
+        // 检查用户是否有ID方法
+        if (method_exists($user, 'getId')) {
+            $userId = $user->getId();
+            if ($userId === null) {
+                return $this->buildErrorResponse('用户ID无效', 400);
+            }
         }
 
         return $user;
@@ -369,7 +386,7 @@ final class FaceToFacePayController extends AbstractController
             return $this->buildErrorResponse('无权访问此订单', 403);
         }
 
-        if ($user instanceof BizUser && $order->getUserId() !== null && $order->getUserId() !== $user->getId()) {
+        if ($user instanceof UserInterface && method_exists($user, 'getId') && $order->getUserId() !== null && $order->getUserId() !== $user->getId()) {
             return $this->buildErrorResponse('无权访问此订单', 403);
         }
 

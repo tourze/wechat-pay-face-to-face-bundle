@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace WechatPayFaceToFaceBundle\Tests\Controller;
 
-use BizUserBundle\Entity\BizUser;
+use Symfony\Component\Security\Core\User\UserInterface;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\RunTestsInSeparateProcesses;
@@ -419,4 +419,5 @@ final class FaceToFacePayControllerTest extends AbstractWebTestCase
         // 对于不支持的HTTP方法，应该返回405或者路由不存在
         $this->assertTrue($client->getResponse()->getStatusCode() === 405 || $client->getResponse()->getStatusCode() === 404);
     }
+
 }

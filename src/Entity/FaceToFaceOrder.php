@@ -7,8 +7,8 @@ namespace WechatPayFaceToFaceBundle\Entity;
 use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 use Stringable;
+use Symfony\Component\Validator\Constraints as Assert;
 use Tourze\DoctrineIndexedBundle\Attribute\IndexColumn;
 use Tourze\DoctrineTimestampBundle\Traits\TimestampableAware;
 use Tourze\DoctrineUserBundle\Attribute\CreateUserColumn;
@@ -16,18 +16,17 @@ use WechatPayFaceToFaceBundle\Enum\TradeState;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'wechat_pay_face_to_face_order', options: ['comment' => '微信面对面收款订单表'])]
-class FaceToFaceOrder implements Stringable
+class FaceToFaceOrder implements \Stringable
 {
     use TimestampableAware;
 
     public function __construct()
     {
-        $now = new DateTimeImmutable();
+        $now = new \DateTimeImmutable();
         $this->setCreateTime($now);
         $this->setUpdateTime($now);
     }
 
-    /** @phpstan-ignore-next-line property.unusedType */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: Types::INTEGER, options: ['comment' => 'ID'])]
@@ -445,7 +444,7 @@ class FaceToFaceOrder implements Stringable
 
     public function setExpireTime(?int $expireTime): void
     {
-        if ($expireTime !== null && $expireTime < 0) {
+        if (null !== $expireTime && $expireTime < 0) {
             throw new \InvalidArgumentException('Expire time cannot be negative');
         }
         $this->expireTime = $expireTime;
@@ -458,7 +457,7 @@ class FaceToFaceOrder implements Stringable
 
     public function setTimeEnd(?int $timeEnd): void
     {
-        if ($timeEnd !== null && $timeEnd < 0) {
+        if (null !== $timeEnd && $timeEnd < 0) {
             throw new \InvalidArgumentException('Time end cannot be negative');
         }
         $this->timeEnd = $timeEnd;
@@ -471,7 +470,7 @@ class FaceToFaceOrder implements Stringable
 
     public function setUserId(?int $userId): void
     {
-        if ($userId !== null && $userId <= 0) {
+        if (null !== $userId && $userId <= 0) {
             throw new \InvalidArgumentException('User ID must be positive');
         }
         $this->userId = $userId;
@@ -489,7 +488,7 @@ class FaceToFaceOrder implements Stringable
 
     public function updateTimestamp(): void
     {
-        $this->setUpdateTime(new DateTimeImmutable());
+        $this->setUpdateTime(new \DateTimeImmutable());
     }
 
     public function __toString(): string

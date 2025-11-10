@@ -332,8 +332,6 @@ final class FaceToFacePayController extends AbstractController
             return $this->buildErrorResponse('用户未登录', 401);
         }
 
-        assert($user instanceof UserInterface);
-
         // 检查用户是否有ID方法
         if (method_exists($user, 'getId')) {
             $userId = $user->getId();
@@ -386,7 +384,7 @@ final class FaceToFacePayController extends AbstractController
             return $this->buildErrorResponse('无权访问此订单', 403);
         }
 
-        if ($user instanceof UserInterface && method_exists($user, 'getId') && $order->getUserId() !== null && $order->getUserId() !== $user->getId()) {
+        if (method_exists($user, 'getId') && $order->getUserId() !== null && $order->getUserId() !== $user->getId()) {
             return $this->buildErrorResponse('无权访问此订单', 403);
         }
 

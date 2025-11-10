@@ -35,8 +35,9 @@ class FaceToFaceOrderDataPopulator
      */
     private function setCoreOrderFields(FaceToFaceOrder $order, array $data): void
     {
-        $outTradeNo = $this->getRequiredString($data, 'out_trade_no', '');
-        $body = $this->getRequiredString($data, 'body', '');
+        // out_trade_no 和 body 字段要求必须是字符串类型，数字类型返回空字符串
+        $outTradeNo = isset($data['out_trade_no']) && is_string($data['out_trade_no']) ? $data['out_trade_no'] : '';
+        $body = isset($data['body']) && is_string($data['body']) ? $data['body'] : '';
         $totalFee = isset($data['total_fee']) && is_numeric($data['total_fee']) ? (int) $data['total_fee'] : 0;
 
         $order->setOutTradeNo($outTradeNo);

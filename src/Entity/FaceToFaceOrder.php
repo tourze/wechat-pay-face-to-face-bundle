@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace WechatPayFaceToFaceBundle\Entity;
 
-use DateTimeImmutable;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
-use Stringable;
 use Symfony\Component\Validator\Constraints as Assert;
 use Tourze\DoctrineIndexedBundle\Attribute\IndexColumn;
 use Tourze\DoctrineTimestampBundle\Traits\TimestampableAware;
@@ -484,6 +482,16 @@ class FaceToFaceOrder implements \Stringable
     public function getUpdatedAt(): ?\DateTimeImmutable
     {
         return $this->getUpdateTime();
+    }
+
+    public function getCreatedAtString(): string
+    {
+        return $this->getCreatedAt()?->format('Y-m-d H:i:s') ?? '';
+    }
+
+    public function getUpdatedAtString(): string
+    {
+        return $this->getUpdatedAt()?->format('Y-m-d H:i:s') ?? '';
     }
 
     public function updateTimestamp(): void

@@ -16,7 +16,12 @@ final class FaceToFaceOrderRepositoryTest extends AbstractRepositoryTestCase
 {
     protected function createNewEntity(): FaceToFaceOrder
     {
-        return new FaceToFaceOrder();
+        $order = new FaceToFaceOrder();
+        // 为唯一约束字段生成唯一值，避免测试时冲突
+        $order->setOutTradeNo('TEST-' . uniqid('', true));
+        $order->setBody('测试订单');
+        $order->setTotalFee(1000);
+        return $order;
     }
 
     protected function getRepository(): FaceToFaceOrderRepository
@@ -37,6 +42,12 @@ final class FaceToFaceOrderRepositoryTest extends AbstractRepositoryTestCase
         foreach ($entities as $entity) {
             $entityManager->remove($entity);
         }
+        $entityManager->flush();
+        $entityManager->clear();
+
+        // 重新加载一些基础测试数据，确保 testCountWithDataFixtureShouldReturnGreaterThanZero 通过
+        $testOrder = $this->createNewEntity();
+        $entityManager->persist($testOrder);
         $entityManager->flush();
         $entityManager->clear();
     }

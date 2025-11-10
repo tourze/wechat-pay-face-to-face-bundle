@@ -10,7 +10,6 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
@@ -100,13 +99,11 @@ final class FaceToFaceOrderCrudController extends AbstractCrudController
         yield TextField::new('payType', '支付方式')
             ->hideOnForm();
 
-        yield DateTimeField::new('createdAt', '创建时间')
-            ->hideOnForm()
-            ->setFormat('yyyy-MM-dd HH:mm:ss');
+        yield TextField::new('createdAtString', '创建时间')
+            ->hideOnForm();
 
-        yield DateTimeField::new('updatedAt', '更新时间')
-            ->hideOnForm()
-            ->setFormat('yyyy-MM-dd HH:mm:ss');
+        yield TextField::new('updatedAtString', '更新时间')
+            ->hideOnForm();
 
         yield TextField::new('expireTime', '过期时间')
             ->hideOnForm()

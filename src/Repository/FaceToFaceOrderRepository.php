@@ -21,7 +21,7 @@ class FaceToFaceOrderRepository extends ServiceEntityRepository
         parent::__construct($registry, FaceToFaceOrder::class);
     }
 
-    public function save(FaceToFaceOrder $entity, bool $flush = false): void
+    public function save(FaceToFaceOrder $entity, bool $flush = true): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class FaceToFaceOrderRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(FaceToFaceOrder $entity, bool $flush = false): void
+    public function remove(FaceToFaceOrder $entity, bool $flush = true): void
     {
         $this->getEntityManager()->remove($entity);
 

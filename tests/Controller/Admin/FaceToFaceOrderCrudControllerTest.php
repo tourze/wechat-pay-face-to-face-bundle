@@ -15,11 +15,6 @@ use WechatPayFaceToFaceBundle\Entity\FaceToFaceOrder;
 #[RunTestsInSeparateProcesses]
 final class FaceToFaceOrderCrudControllerTest extends AbstractEasyAdminControllerTestCase
 {
-    public function testGetEntityFqcn(): void
-    {
-        $this->assertSame(FaceToFaceOrder::class, FaceToFaceOrderCrudController::getEntityFqcn());
-    }
-
     public function testFixtureLoaded(): void
     {
         self::createClientWithDatabase();

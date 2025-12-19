@@ -126,7 +126,7 @@ final class SyncOrderStatusCommandTest extends AbstractCommandTestCase
         $command = self::getService(SyncOrderStatusCommand::class);
 
         $application = new Application();
-        $application->add($command);
+        $application->addCommand($command);
 
         $this->commandTester = new CommandTester($application->find('wechat-pay:face-to-face:sync-order-status'));
     }

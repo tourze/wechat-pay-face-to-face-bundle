@@ -48,7 +48,7 @@ final class WechatPayFaceToFaceExtensionTest extends AbstractDependencyInjection
         // Check that key services are loaded
         $this->assertTrue($this->container->hasDefinition('WechatPayFaceToFaceBundle\\Service\\FaceToFacePayService'));
         $this->assertTrue($this->container->hasDefinition('WechatPayFaceToFaceBundle\\Repository\\FaceToFaceOrderRepository'));
-        $this->assertTrue($this->container->hasDefinition('WechatPayFaceToFaceBundle\\Controller\\FaceToFacePayController'));
+        $this->assertTrue($this->container->hasDefinition('WechatPayFaceToFaceBundle\\Controller\\CreateOrderController'));
     }
 
     public function testLoadWithEmptyConfigs(): void

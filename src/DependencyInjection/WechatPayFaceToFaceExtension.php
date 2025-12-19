@@ -7,7 +7,7 @@ namespace WechatPayFaceToFaceBundle\DependencyInjection;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Tourze\SymfonyDependencyServiceLoader\AutoExtension;
 
-class WechatPayFaceToFaceExtension extends AutoExtension
+final class WechatPayFaceToFaceExtension extends AutoExtension
 {
     protected function getConfigDir(): string
     {
